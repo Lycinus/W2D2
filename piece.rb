@@ -1,24 +1,4 @@
-require "board"
-
-class Piece
-
-  def initialize(position, board)
-    @position = position
-    @board = board
-  end
-
-end
-
-class Bishop < Piece
-  include SlidingPiece
-
-  attr_reader :directions, :board
-
-  def initialize(position, board)
-    super
-    @directions = [:upleft, :upright, :downleft, :downright]
-  end
-end
+require_relative "board"
 
 module SlidingPiece
   DIR_DIFF = { 
@@ -40,12 +20,67 @@ module SlidingPiece
       position = [curr_pos.first + dir.first, curr_pos.last + dir.last]
 
       until self.board[position].is_a?(Piece)
-        possible_moves << position
+        Board.in_range?(position) ? possible_moves << position : break
         position = [position.first + dir.first, position.last + dir.last]
       end
 
     end
 
-    possible_moves.select { |pos| Board.in_range?(pos) }
+    possible_moves #.select { |pos| Board.in_range?(pos) }
   end
 end
+
+class Piece
+
+  def initialize(position, board)
+    @position = position
+    @board = board
+  end
+
+end
+
+class Bishop < Piece
+  include SlidingPiece
+
+  attr_reader :directions, :board, :position
+
+  def initialize(position, board)
+    super
+    @directions = [:upleft, :upright, :downleft, :downright]
+  end
+
+  def move_piece
+    moves(self.position, self.directions)
+  end
+end
+
+class Rook < Piece
+  include SlidingPiece
+
+  attr_reader :directions, :board, :position
+
+  def initialize(position, board)
+    super
+    @directions = [:up, :down, :left, :right]
+  end
+
+  def move_piece
+    moves(self.position, self.directions)
+  end
+end 
+
+class Queen < Piece
+  include SlidingPiece
+
+  attr_reader :directions, :board, :position
+
+  def initialize(position, board)
+    super
+    @directions = [:up, :down, :left, :right, :upleft, :upright, :downleft, :downright]
+  end
+
+  def move_piece
+    moves(self.position, self.directions)
+  end
+end 
+
