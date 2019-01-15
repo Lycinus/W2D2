@@ -5,8 +5,8 @@ class Board
 
   def initialize
     @grid = Array.new(8) { Array.new(8) }
-    # starting_rows = [0,1,6,7]
-    # starting_rows.each { |row| @grid[row].map! { |el| Piece.new } }
+    starting_rows = [0,1,6,7]
+    starting_rows.each { |row| @grid[row].map!.with_index { |el, idx| Piece.new([row, idx], self) } }
   end
 
 
@@ -27,7 +27,7 @@ class Board
     true
   end
 
-  
+
 
   def move_piece(start_pos, end_pos)
    
