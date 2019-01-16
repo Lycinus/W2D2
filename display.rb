@@ -39,7 +39,8 @@ def colorize
     colorized_row = []
 
     row.each_with_index do |el, el_idx|
-      piece = "| K |" # el.type.to_s
+      #if @board[[row_idx, el_idx]]
+      piece = "|#{@board[[row_idx, el_idx]].sym}|" # el.type.to_s
 
       if @cursor.cursor_pos == [row_idx, el_idx]
         colorized_row << piece.colorize(:color => :black, :background => :green)
