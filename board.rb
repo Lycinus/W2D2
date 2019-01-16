@@ -48,7 +48,6 @@ class Board
   end
 
 
-
   def move_piece(start_pos, end_pos)
    
     if self[start_pos] == nil
